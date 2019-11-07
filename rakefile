@@ -1,0 +1,67 @@
+require 'rubygems'
+require 'bundler/setup'
+require 'csv'
+require 'rake'
+require 'sequel'
+require 'pg'
+
+
+task :environment do
+  ENV['RACK_ENV'] ||= 'development'
+  require File.expand_path('config/environment', __dir__)
+end
+
+task routes: :environment do
+  Base::API.routes.each do |route|
+    method = route.request_method.ljust(10)
+    path = route.origin
+    puts "     #{method} #{path}"
+  end
+end
+
+task import: :environment do
+  require File.expand_path('config/environment', __dir__)
+
+  db_config_file = File.join(File.dirname(__FILE__), 'config', 'database.yml')
+  if File.exist?(db_config_file)
+    config = YAML.load(File.read(db_config_file))
+    DB = Sequel.connect(config)
+    Sequel.extension :migration
+  end
+
+  if DB
+    Sequel::Migrator.run(DB, File.join(File.dirname(__FILE__), 'migrations'))
+    user = DB[:users]
+    pizza = DB[:pizzas]
+    file = "./data.csv"
+    CSV.foreach(file, :headers => true) do |row|
+      begin
+        person = user.insert(
+          name: row[0]
+        )
+      rescue Sequel::Error
+        person = user[name: row[0]]
+      else
+        person = user[id: person]
+      end
+      begin
+        pizza.insert(
+          type: row[1],
+          eaten_at: row[2],
+          person_id: person[:id]
+        )
+      rescue Sequel::Error
+        puts "import was not succesfull"
+      else
+        puts "import was succesfull"
+      end
+    end
+  end
+
+end
+# Load models
+Dir[File.join(File.dirname(__FILE__), 'app/models', '**', '*.rb')].sort.each {|file| require file }
+# require 'rubocop/rake_task'
+# RuboCop::RakeTask.new(:rubocop)
+#
+# task default: %i[rubocop spec]
