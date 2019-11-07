@@ -1,0 +1,5 @@
+adapter: postgres
+host: 127.0.0.1
+database: pizza_analytics
+user: bas
+password: 'development'
