@@ -5,6 +5,10 @@ require 'rake'
 require 'sequel'
 require 'pg'
 
+require 'rspec/core'
+require 'rspec/core/rake_task'
+
+RSpec::Core::RakeTask.new(:spec)
 
 task :environment do
   ENV['RACK_ENV'] ||= 'development'

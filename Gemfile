@@ -19,5 +19,11 @@ group :development do
   gem 'guard-bundler'
   gem 'guard-rack'
   gem 'rake'
+end
 
+group :test do
+  gem 'capybara'
+  gem 'rack-test'
+  gem 'rspec'
+  gem 'selenium-webdriver'
 end
