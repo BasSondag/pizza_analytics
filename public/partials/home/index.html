@@ -5,6 +5,12 @@
 <h2 ng-repeat = "error in messages">{{error}}</h2>
 
 <form>
-	Name:<input type="text" ng-model="newUser.name">
-	<input type="submit" ng-click="findUser(newUser)" value="Find">
+	Name:<input type="text" ng-model="person.name">
+	<input type="submit" ng-click="findUser(person)" value="Find">
 </form>
+<div ng-if="personInfo">
+  <h3>Name: {{personInfo.name}}</h3>
+  <p>Id: {{personInfo.id}}</p>
+  <p>Creeated at: {{personInfo.created_at}}</p>
+
+</div>

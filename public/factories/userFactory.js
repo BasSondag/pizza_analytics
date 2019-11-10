@@ -1,16 +1,16 @@
 myApp.factory('userFactory', function($http, $location){
 	var factory = {};
-	var thisUser = null;
-	var users = []
 
 	factory.findUser = function(person,callback) {
-		$http.get('/api/people/' + person.name).success(function(data) {
-      console.log(data,'in fac');
-      callback(data);
-		})
-
+		$http.get('/api/people/' + person.name)
+      .success(function(data) {
+        if(!data){
+          data = {'error': "Person does not exist"}
+        }
+        callback(data);
+      });
 	}
 
-	return factory
+	return factory;
 
-})
+});

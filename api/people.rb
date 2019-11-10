@@ -12,7 +12,7 @@ module Base
         requires :id, type: String, desc: "Name of the person"
       end
       get ":id", root: "person" do
-        DB[:users].where(name: params[:id]).first!
+        DB[:users].where(name: params[:id]).first
       end
     end
   end
