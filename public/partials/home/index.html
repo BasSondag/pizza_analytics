@@ -1,4 +1,4 @@
-<h1>Welcome</h1>
+<h1>Pizza Analytics</h1>
 <hr>
 <br>
 <br>
@@ -12,5 +12,34 @@
   <h3>Name: {{personInfo.name}}</h3>
   <p>Id: {{personInfo.id}}</p>
   <p>Creeated at: {{personInfo.created_at}}</p>
-
 </div>
+<hr>
+<br>
+<br>
+<form>
+  See Pizza consumption per topping:
+  <select ng-model="topping.type" ng-options="x for x in toppings">
+  </select>
+  <input type="submit" ng-click="findPizzaPerTopping(topping)" value="Show">
+</form>
+<div ng-if="pizzasPerTopping">
+  <table>
+    <thead>
+      <tr>
+        <th>id:</th>
+        <th>toppin type:</th>
+        <th>eaten at:</th>
+        <th>by user:</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="pizza in pizzasPerTopping">
+        <td>{{pizza.id}}</td>
+        <td>{{pizza.type}}</td>
+        <td>{{pizza.eaten_at}}</td>
+        <td>{{pizza.name}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<hr>
