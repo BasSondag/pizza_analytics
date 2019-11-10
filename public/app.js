@@ -4,11 +4,11 @@ const myApp = angular.module('myApp',['ngRoute']);
   myApp.config(function($routeProvider) {
     $routeProvider
       .when('/', {
-        controller: 'usersController',
-        templateUrl: "partials/users/index.html"
+        controller: 'homeController',
+        templateUrl: "partials/home/index.html"
       })
       .otherwise({
         redirectTo: "/"
       })
   })
-})
+}());

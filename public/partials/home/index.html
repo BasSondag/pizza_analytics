@@ -1,0 +1,10 @@
+<h1>Welcome</h1>
+<hr>
+<br>
+<br>
+<h2 ng-repeat = "error in messages">{{error}}</h2>
+
+<form>
+	Name:<input type="text" ng-model="newUser.name">
+	<input type="submit" ng-click="findUser(newUser)" value="Find">
+</form>
